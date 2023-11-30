@@ -3,27 +3,35 @@ services:
   web:
     image: odoo:16.0
     container_name: odoo-web-dev
+    networks:
+      - odoo-dev-network
     depends_on:
       - db
     ports:
       - "8069:8069"
-    command: odoo --dev=all --log-level=debug --addons=/mnt/extra-addons/addons/custom,/mnt/extra-addons/dev-addons --db-filter=^%d$ --admin-password=developpement
+    command: odoo --dev=all --log-level=debug --addons=/mnt/extra-addons/dev-addons/web -d development -i base,web_responsive
     volumes:
       - ./addons:/mnt/extra-addons/addons
-      - ./addons:/mnt/extra-addons/dev-addons
+      - ./dev-addons:/mnt/extra-addons/dev-addons
       - type: bind
-        source: ./Odoo
+        source: ./odoo-data
         target: /var/lib/odoo/.local/share/Odoo
         read_only: false
   db:
     image: postgres:16
     container_name: odoo-db-dev
+    networks:
+      - odoo-dev-network
     volumes:
       - postgres-data-dev:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_PASSWORD=odoo
       - POSTGRES_USER=odoo
+
+networks:
+  odoo-dev-network:
+    driver: bridge
 
 volumes:
   postgres-data-dev:
