@@ -9,7 +9,7 @@
 5. Détails du travail à faire
     1. Outils de planification
        Trello + Github
-    3. Choix d’activité
+      
        
 6. Comment/Quand (fréquence) on va communiquer ?
    Tous les jours pour se donner des news et pouvoir s'organiser
