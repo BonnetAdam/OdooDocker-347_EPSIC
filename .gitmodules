@@ -1,0 +1,8 @@
+[submodule "addons/l10n-switzerland"]
+	path = addons/l10n-switzerland
+	url = git@github.com:OCA/l10n-switzerland.git
+	branch = 16.0
+[submodule "dev-addons/web"]
+	path = dev-addons/web
+	url = git@github.com:OCA/web.git
+	branch = 16.0

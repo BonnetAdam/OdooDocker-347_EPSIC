@@ -1,0 +1,29 @@
+version: '3.3'
+services:
+  web:
+    image: odoo:16.0
+    container_name: odoo-web-dev
+    depends_on:
+      - db
+    ports:
+      - "8069:8069"
+    command: odoo --dev=all --log-level=debug --addons=/mnt/extra-addons/addons/custom,/mnt/extra-addons/dev-addons --db-filter=^%d$ --admin-password=developpement
+    volumes:
+      - ./addons:/mnt/extra-addons/addons
+      - ./addons:/mnt/extra-addons/dev-addons
+      - type: bind
+        source: ./Odoo
+        target: /var/lib/odoo/.local/share/Odoo
+        read_only: false
+  db:
+    image: postgres:16
+    container_name: odoo-db-dev
+    volumes:
+      - postgres-data-dev:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_USER=odoo
+
+volumes:
+  postgres-data-dev:
