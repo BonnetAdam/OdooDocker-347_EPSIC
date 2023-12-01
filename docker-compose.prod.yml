@@ -1,0 +1,60 @@
+# Permet de choisir la version de notre docker compose
+version: '3.3'
+services:
+  # Web est mon containers pour mon application back/front. Mal heuresement dans odoo le back est le front tourne sous le meme process.
+  web:
+    # Image de base de mon container
+    image: odoo:16.0
+    # Nom de mon container
+    container_name: odoo-web
+    # Réseau de mon container
+    networks:
+      # Ceci est mon réseau custom défini plus bas
+      - odoo-network
+    # Dépendance de mon container. Permet d'attendre que la base de donnée soit lancé avant de lancer le container
+    depends_on:
+      - db
+    # Port de mon container
+    ports:
+      - "8069:8069"
+    # Commande de mon container. 
+    # Dans notre cas j'ai activer:
+    # le --config permet de spécifier le fichier de configuration
+    command: odoo --config=/etc/odoo/odoo.conf
+    # Volume de mon container. Permet de monter des dossier de mon ordinateur dans le container
+    volumes:
+      - ./addons:/mnt/extra-addons/addons
+      - ./config:/etc/odoo
+      # Permet de monter le dossier de data de odoo dans un dossier de mon ordinateur
+      - type: bind
+        source: ./odoo-data
+        target: /var/lib/odoo/.local/share/Odoo
+        read_only: false
+  # Base de donnée de mon container
+  db:
+    # Image de base de mon container
+    image: postgres:16
+    # Nom de mon container
+    container_name: odoo-db
+    # Réseau de mon container
+    networks:
+      # Ceci est mon réseau custom défini plus bas
+      - odoo-network
+    # Volumes de mon container
+    volumes:
+      # Ce volume permet de rendre les data de la base de données persistante meme si ont fait un docker compose down.
+      - postgres-data:/var/lib/postgresql/data
+    # Ceci sont mes variables environmental
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_USER=odoo
+
+# Ceci est mon network custom. Il est en bridge ce qui lui permet d'acceder a internet
+networks:
+  odoo-network:
+    driver: bridge
+
+# Voici le volumes qui permet de rendre ma base de données persistante
+volumes:
+  postgres-data:
