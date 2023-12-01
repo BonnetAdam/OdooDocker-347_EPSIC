@@ -1,37 +1,65 @@
+# Permet de choisir la version de notre docker compose
 version: '3.3'
 services:
+  # Web est mon containers pour mon application back/front. Mal heuresement dans odoo le back est le front tourne sous le meme process.
   web:
+    # Image de base de mon container
     image: odoo:16.0
+    # Nom de mon container
     container_name: odoo-web-dev
+    # Réseau de mon container
     networks:
+      # Ceci est mon réseau custom défini plus bas
       - odoo-dev-network
+    # Dépendance de mon container. Permet d'attendre que la base de donnée soit lancé avant de lancer le container
     depends_on:
       - db
+    # Port de mon container
     ports:
       - "8069:8069"
-    command: odoo --dev=all --log-level=debug --addons=/mnt/extra-addons/dev-addons/web -d development -i base,web_responsive
+    # Commande de mon container. 
+    # Dans notre cas j'ai activer:
+    # le mode DEV qui permet de redemarrer le serveur a chaque modification de fichier.
+    # le log level debug qui permet d'avoir plus d'information sur les erreurs
+    # le -d permet de directement créer une base de données. Avec les data de démonstration
+    # le -i permet d'installer les modules de base. Ce qui est requis avec le -d
+    # le --config permet de spécifier le fichier de configuration
+    command: odoo --dev=all --log-level=debug -d development -i base,web_responsive --config=/etc/odoo/odoo-dev.conf
+    # Volume de mon container. Permet de monter des dossier de mon ordinateur dans le container
     volumes:
       - ./addons:/mnt/extra-addons/addons
       - ./dev-addons:/mnt/extra-addons/dev-addons
+      - ./config:/etc/odoo
+      # Permet de monter le dossier de data de odoo dans un dossier de mon ordinateur
       - type: bind
         source: ./odoo-data
         target: /var/lib/odoo/.local/share/Odoo
         read_only: false
+  # Base de donnée de mon container
   db:
+    # Image de base de mon container
     image: postgres:16
+    # Nom de mon container
     container_name: odoo-db-dev
+    # Réseau de mon container
     networks:
+      # Ceci est mon réseau custom défini plus bas
       - odoo-dev-network
+    # Volumes de mon container
     volumes:
+      # Ce volume permet de rendre les data de la base de données persistante meme si ont fait un docker compose down.
       - postgres-data-dev:/var/lib/postgresql/data
+    # Ceci sont mes variables environmental
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_PASSWORD=odoo
       - POSTGRES_USER=odoo
 
+# Ceci est mon network custom. Il est en bridge ce qui lui permet d'acceder a internet
 networks:
   odoo-dev-network:
     driver: bridge
 
+# Voici le volumes qui permet de rendre ma base de données persistante
 volumes:
   postgres-data-dev:
