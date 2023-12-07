@@ -18,7 +18,7 @@ Pour ce project nous avons desider de partir sur du Odoo. Nous avons donc créer
 ## Caractéristiques des environnements
 Les environnements sont basé sur la même image. Cependant il y a des différences entre les deux. Dans l'env dev j'ai mis `Chargement de code` et `Variables d'environnement` ansi que des changements tels que pas la même base de données. 
 
-## Architecture
+## Arborescence
 J'ai utiliser `git ls-tree -r --name-only HEAD | tree --fromfile` pour créer l'arborescence ci dessous. Les commentaire sont fait a la main en revanche.
 ```bash
 .
@@ -35,6 +35,9 @@ J'ai utiliser `git ls-tree -r --name-only HEAD | tree --fromfile` pour créer l'
 ├── docker-compose.dev.yml # Le fichier de configuration de l'environnement de dev
 └── docker-compose.prod.yml # Le fichier de configuration de l'environnement de prod
 ```
+
+## Architecture
+Dans ce projet docker nous avons 2 containers, un contenant mon Back + mon Front, Odoo à malheuresement été développer comme ceci. Et un autre contenant qui contient la base de donnée. Nous avons donc 2 containers qui communique entre eux. Le container Odoo est accessible via le port 8069 et le container Postgres est accessible via le port 5432. 
 
 ## How To
 /!\ Attention. Si le terminal vous met une erreur pour `docker-compose`, il faut faire `docker compose`. Cela est du suite a l'installation que vous avait choisi  /!\
