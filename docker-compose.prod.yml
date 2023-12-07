@@ -50,7 +50,7 @@ services:
       - POSTGRES_PASSWORD=odoo
       - POSTGRES_USER=odoo
 
-# Ceci est mon network custom. Il est en bridge ce qui lui permet d'acceder a internet
+# Ceci est mon network custom. Il est en bridge ce qui lui permet d'acceder a internet. Et permet une communication intra container
 networks:
   odoo-network:
     driver: bridge
