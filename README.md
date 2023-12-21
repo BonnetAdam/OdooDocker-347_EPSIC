@@ -61,33 +61,45 @@ Utilisation de la commande `git ls-tree -r --name-only HEAD | tree --fromfile` p
 ## 📘 Guide d'Utilisation
 
 ### 📥 Clonage du Repository
-- **🔑 Avec clé SSH :**
-  ```bash
-  git clone --recursive git@github.com:CrazyOutOff/347-08.git
-  ```
-- **🔗 Sans clé SSH :**
-  ```bash
-  git clone --recursive https://github.com/CrazyOutOff/347-08.git
-  ```
+1. **🔑 Avec clé SSH :**
+   ```bash
+   git clone --recursive git@github.com:CrazyOutOff/347-08.git
+   ```
+   Cette commande clone le repository en utilisant SSH, ce qui nécessite une clé SSH configurée sur GitHub. L'option `--recursive` assure que tous les sous-modules sont également clonés.
+
+2. **🔗 Sans clé SSH :**
+   ```bash
+   git clone --recursive https://github.com/CrazyOutOff/347-08.git
+   ```
+   Utilisez cette commande si vous n'avez pas configuré de clé SSH. Elle clone le repository via HTTPS.
 
 ### ▶️ Lancement des Environnements
-- **💻 Développement :**
-  ```bash
-  docker-compose -f docker-compose.dev.yml up
-  ```
-- **🚀 Production :**
-  ```bash
-  docker-compose -f docker-compose.prod.yml up
-  ```
+1. **💻 Développement :**
+   ```bash
+   docker-compose -f docker-compose.dev.yml up
+   ```
+   Cette commande lance l'environnement de développement en utilisant le fichier `docker-compose.dev.yml`. Elle démarre tous les services définis dans ce fichier Docker Compose.
 
-### ⏹️ Arrêt des Environnements
-- **🛑 Arrêt standard :**
-  ```bash
-  docker-compose -f <fichier> down
-  ```
-- **🧹 Arrêt avec suppression des volumes :**
-  ```bash
-  docker-compose -f <fichier> down -v
-  ```
+2. **🚀 Production :**
+   ```bash
+   docker-compose -f docker-compose.prod.yml up
+   ```
+   Utilisez cette commande pour lancer l'environnement de production. Elle se base sur le fichier `docker-compose.prod.yml`, qui contient la configuration pour la production.
+
+### ⏹️
+
+ Arrêt des Environnements
+1. **🛑 Arrêt standard :**
+   ```bash
+   docker-compose -f <fichier> down
+   ```
+   Remplacez `<fichier>` par le nom du fichier Docker Compose correspondant à l'environnement que vous souhaitez arrêter.
+
+2. **🧹 Arrêt avec suppression des volumes :**
+   ```bash
+   docker-compose -f <fichier> down -v
+   ```
+   Cette commande arrête l'environnement et supprime également les volumes associés, ce qui est utile pour un nettoyage complet.
 
 ---
+
