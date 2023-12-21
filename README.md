@@ -1,6 +1,4 @@
-D'accord, je vais rédiger une documentation complète et améliorée pour votre projet Docker avec Odoo. Voici une structure proposée :
 
----
 
 # Documentation du Projet Docker avec Odoo pour le Labo 347-08
 
