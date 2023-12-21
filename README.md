@@ -1,17 +1,19 @@
 
 
+---
+
 # 🚀 Documentation du Projet Docker avec Odoo pour le Labo 347-08
 
 ## 🌟 Introduction
-Ce projet a pour but de développer et déployer une application Odoo en utilisant Docker, en créant des environnements de développement et de production distincts et adaptés.
+Ce projet a pour but de développer et déployer une application Odoo en utilisant Docker, en établissant des environnements de développement et de production distincts et adaptés.
 
 ## 📋 Charte de l'Équipe
 - **Membres et Rôles :**
-  - **👨‍💻 Ruben :** Rédaction du README et préparation de la présentation.
-  - **👨‍🔧 Adam :** Implémentation et gestion de Docker.
+  - **👨‍💻 [Ruben](https://github.com/ruben4reall) :** Rédaction du README et préparation de la présentation.
+  - **👨‍🔧 [Adam](https://github.com/CrazyOutOff) :** Implémentation et gestion de Docker.
 
 - **📆 Planning de Travail :**
-  - Travail pendant les heures de cours et, au besoin, les weekends.
+  - Travail pendant les heures de cours et, au besoin, pendant les weekends.
 
 - **🛠️ Outils de Planification :**
   - Trello pour la gestion des tâches et GitHub pour le suivi du code.
@@ -33,6 +35,8 @@ Ce projet a pour but de développer et déployer une application Odoo en utilisa
   - `odoo.conf` pour la configuration.
 
 ## 📂 Arborescence des Fichiers
+Utilisation de la commande `git ls-tree -r --name-only HEAD | tree --fromfile` pour générer l'arborescence. Les commentaires sont ajoutés manuellement.
+
 ```
 .
 ├── 🚫 .gitignore                # Exclusion de fichiers
@@ -86,3 +90,4 @@ Ce projet a pour but de développer et déployer une application Odoo en utilisa
   docker-compose -f <fichier> down -v
   ```
 
+---
